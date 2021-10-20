@@ -1,40 +1,54 @@
 
-const { gql } = require('apollo-server-express');
+const { AuthenticationError } = require('apollo-server-express');
+const { User, bookSchema} = require('../models');
+const { signToken } = require('../utils/auth');
 
-const typeDefs = gql`
-type User {
-    _id: ID
-    username: String
-    email: String
-    bookCount: int
-    savedBooks: [Book]
+const resolvers = {
+    Query: {
+        me: async (parent, args, context) => {
+            if (context.user) {
+                const userData = await User.findOne({ _id: context.user._id })
+                .select('-__V -password')
+                .populate('bookSchema');
+
+                return userData;
+            }
+            throw new AuthenticationError('Not logged in')
+        },
+        users: async () => {
+            return User.find()
+            .select('-__V -password')
+            .populate('bookSchema');
+        },
+        user: async (parent, { username }) => {
+            return User.findOne({ username })
+            .select('-__password')
+            .populate('bookSchema')
+        },
+        saveBook: async (parent, { book }, context) => {
+            if (context.user) {
+                const updatedUser = await User.findByIdAndUpdate(
+                { _id: context.user._id},
+                { $push: { saveBook: book } },
+                { new: true }
+                );
+                return updatedUser;
+            }
+
+        throw new AuthenticationError('You need to be logged in to save new book');
+        },
+        deleteBook: async (parent, args, context) => {
+            if (context.user) {
+                const updatedUser = await User.findByIdAndUpdate(
+                    { _id: context.user._id},
+                    {$pull: { saveBook: { bookId } } },
+                    { mew: true }
+                );
+                return updatedUser;
+            }
+            throw new AuthenticationError('You need to be logged in!');
+        }
+    }
 }
 
-type Book {
-    bookID: ID!
-    authors: String
-    image: String
-    link: String
-    title String!
-    description: string
-
-}
-
-type Query {
-    me: User
-    users: [User]
-    user(username: String!); User
-}
-type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(usename: Sting!, email: String!, password: String!): Auth
-    SaveBook(bookId: ID!, bookBody: String!); Book
-    removeBook()
-}
-
-type Auth {
-    token: ID!
-    user: User
-}
-`;
-
+module.exports = resolvers
