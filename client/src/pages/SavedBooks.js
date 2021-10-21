@@ -9,7 +9,7 @@ import { removeBookId } from '../utils/localStorage';
 // import necessary items for useQuery
 import { REMOVE_BOOK } from '../utils/mutations';
 import { Get_ME } from '../utils/queries';
-import { removeBookId } from '../utils/localStorage';
+//import { removeBookId } from '../utils/localStorage';
 
 // use Query methods
 const SavedBooks = () => {
