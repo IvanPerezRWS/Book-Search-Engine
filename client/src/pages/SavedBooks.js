@@ -11,6 +11,7 @@ import { REMOVE_BOOK } from '../utils/mutations';
 import { Get_ME } from '../utils/queries';
 //import { removeBookId } from '../utils/localStorage';
 
+import { useQuery, useMutation } from '@apollo/react-hooks'
 // use Query methods
 const SavedBooks = () => {
 
@@ -39,7 +40,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (!userData.length) {
     return <h2>LOADING...</h2>;
   }
 
