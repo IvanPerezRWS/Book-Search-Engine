@@ -11,6 +11,12 @@ Book-search engine will allow users to:
   Able to remove books for your list
   and Much more!
   
+  ## Link to application (See bug analysis in notes section)
+  https://git.heroku.com/secure-sea-40297.git
+
+  ## Github repository
+  https://github.com/IvanPerezRWS/Book-Search-Engine.git
+  
   ## Notes
   After much degubbing I managed to have a succesful push to heroku as shown in the folowing screenshot.
   ![image](https://user-images.githubusercontent.com/83327047/139517068-2bc271dd-2425-49bd-ba22-03e82a9e362e.png)
