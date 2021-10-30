@@ -30,3 +30,6 @@ Book-search engine will allow users to:
 
   After consulting the internet, helpboards and youtube videos it was determined that the H10 error is commonly caused by
   a bug in the procfile at the root of the directory, a missing profile or procfile pointing at wrong directory, missing env variables or missing required scripts. I have extensively looked at these issues to no avail. I hope that this analysis of potential bugs make up for the lack of a deployed site. :)
+
+Heroku Logs:
+![image](https://user-images.githubusercontent.com/83327047/139529503-a8ed08e3-bb31-4c60-9050-3707c4e0d56d.png)
